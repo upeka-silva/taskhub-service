@@ -1,14 +1,9 @@
-package lk.project.taskhub.entity;
-
-
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+package lk.project.taskhub.model;
+import jakarta.persistence.*;
 
 @Entity
+@Table(name = "users")
 public class User {
-
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -17,20 +12,22 @@ public class User {
     private String  lastName;
     private String email;
     private String password;
+    private String role;
     private boolean isEnable =false;
 
     public User() {
     }
 
-    public User(Long id, String firstName, String lastName, String email, String password, boolean isEnable) {
+    public User(Long id, String firstName, String lastName, String email,
+                String password, String role, boolean isEnable) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
         this.password = password;
+        this.role = role;
         this.isEnable = isEnable;
     }
-
 
     public Long getId() {
         return id;
@@ -70,6 +67,14 @@ public class User {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
     }
 
     public boolean isEnable() {
