@@ -1,6 +1,8 @@
 package lk.project.taskhub.model;
 import jakarta.persistence.*;
 
+import java.time.LocalDate;
+
 @Entity
 @Table(name = "users")
 public class User {
@@ -10,24 +12,33 @@ public class User {
     private Long id;
     private String firstName;
     private String  lastName;
+    @Column(name = "user_email",nullable = false,unique = true)
     private String email;
     private String password;
     private String role;
+    @Column(name = "verification_code")
+    private String verificationCode;
+    @Column(name = "verification_expireration")
+    private LocalDate verificationCodeExpireAt;
     private boolean isEnable =false;
 
     public User() {
     }
 
-    public User(Long id, String firstName, String lastName, String email,
-                String password, String role, boolean isEnable) {
+    public User(Long id, String firstName, String lastName, String email, String password,
+                String role, String verificationCode,
+                LocalDate verificationCodeExpireAt, boolean isEnable) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
         this.password = password;
         this.role = role;
+        this.verificationCode = verificationCode;
+        this.verificationCodeExpireAt = verificationCodeExpireAt;
         this.isEnable = isEnable;
     }
+
 
     public Long getId() {
         return id;
@@ -75,6 +86,22 @@ public class User {
 
     public void setRole(String role) {
         this.role = role;
+    }
+
+    public String getVerificationCode() {
+        return verificationCode;
+    }
+
+    public void setVerificationCode(String verificationCode) {
+        this.verificationCode = verificationCode;
+    }
+
+    public LocalDate getVerificationCodeExpireAt() {
+        return verificationCodeExpireAt;
+    }
+
+    public void setVerificationCodeExpireAt(LocalDate verificationCodeExpireAt) {
+        this.verificationCodeExpireAt = verificationCodeExpireAt;
     }
 
     public boolean isEnable() {
