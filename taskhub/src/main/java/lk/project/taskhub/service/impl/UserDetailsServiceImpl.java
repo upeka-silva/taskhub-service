@@ -36,8 +36,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
                      loadUser.get().getEmail(),
                      loadUser.get().getPassword(),
                      loadUser.get().getVerificationCode(),
-                     loadUser.get().getVerificationCodeExpireAt(),
-                     true,
+                     loadUser.get().getVerificationCodeExpireAt(), loadUser.get().isEnable(),
                       Collections.singletonList(grantedAuthority)
             );
            return userDetails;

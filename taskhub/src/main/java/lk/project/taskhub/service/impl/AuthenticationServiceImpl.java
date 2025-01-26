@@ -64,7 +64,6 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     public LoginResponseDto authenticate(LoginRequestDataDto loginDataDto){
         User user = userRepository.findByEmail(loginDataDto.getEmail()).orElseThrow(() ->
                 new UsernameNotFoundException("User not found!"));
-        System.out.println(user.getFirstName());
 
         if(!user.isEnable()){
             throw new UserNotVerifiedException("This user not verified!"+loginDataDto.getEmail());
