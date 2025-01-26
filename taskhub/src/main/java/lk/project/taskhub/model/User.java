@@ -2,6 +2,7 @@ package lk.project.taskhub.model;
 import jakarta.persistence.*;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "users")
@@ -12,23 +13,23 @@ public class User {
     private Long id;
     private String firstName;
     private String  lastName;
-    @Column(name = "user_email",nullable = false,unique = true)
+    @Column(nullable = false,unique = true)
     private String email;
+    @Column(length = 1000)
     private String password;
     private String role;
     @Column(name = "verification_code")
     private String verificationCode;
     @Column(name = "verification_expireration")
-    private LocalDate verificationCodeExpireAt;
+    private LocalDateTime verificationCodeExpireAt;
     private boolean isEnable =false;
 
     public User() {
     }
 
-    public User(Long id, String firstName, String lastName, String email, String password,
+    public User(String firstName, String lastName, String email, String password,
                 String role, String verificationCode,
-                LocalDate verificationCodeExpireAt, boolean isEnable) {
-        this.id = id;
+                LocalDateTime verificationCodeExpireAt) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
@@ -36,7 +37,6 @@ public class User {
         this.role = role;
         this.verificationCode = verificationCode;
         this.verificationCodeExpireAt = verificationCodeExpireAt;
-        this.isEnable = isEnable;
     }
 
 
@@ -96,11 +96,11 @@ public class User {
         this.verificationCode = verificationCode;
     }
 
-    public LocalDate getVerificationCodeExpireAt() {
+    public LocalDateTime getVerificationCodeExpireAt() {
         return verificationCodeExpireAt;
     }
 
-    public void setVerificationCodeExpireAt(LocalDate verificationCodeExpireAt) {
+    public void setVerificationCodeExpireAt(LocalDateTime verificationCodeExpireAt) {
         this.verificationCodeExpireAt = verificationCodeExpireAt;
     }
 
