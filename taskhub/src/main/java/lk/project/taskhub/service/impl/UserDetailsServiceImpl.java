@@ -2,8 +2,6 @@ package lk.project.taskhub.service.impl;
 import jakarta.transaction.Transactional;
 import lk.project.taskhub.model.User;
 import lk.project.taskhub.repository.UserRepository;
-import lk.project.taskhub.service.UserDetailsImpl;
-import org.springframework.security.config.core.GrantedAuthorityDefaults;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -11,7 +9,6 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
-import java.util.Collection;
 import java.util.Collections;
 import java.util.Optional;
 
@@ -27,8 +24,10 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     }
     @Transactional
     @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        Optional<User> loadUser = userRepository.findByEmail(username);
+    public UserDetails loadUserByUsername(String userName) throws UsernameNotFoundException {
+        Optional<User> loadUser = userRepository.findByEmail(userName);
+        System.out.println(userName);
+        System.out.println(loadUser.get().getFirstName());
         if (loadUser.isPresent()){
             GrantedAuthority grantedAuthority = new SimpleGrantedAuthority(loadUser.get().getRole());
             UserDetailsImpl userDetails = new UserDetailsImpl(
@@ -38,11 +37,11 @@ public class UserDetailsServiceImpl implements UserDetailsService {
                      loadUser.get().getPassword(),
                      loadUser.get().getVerificationCode(),
                      loadUser.get().getVerificationCodeExpireAt(),
-                     loadUser.get().isEnable(),
+                     true,
                       Collections.singletonList(grantedAuthority)
             );
-
+           return userDetails;
         }
-        throw  new UsernameNotFoundException("this user not found!"+username);
+        throw  new UsernameNotFoundException("this user not found!"+userName);
     }
 }

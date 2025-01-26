@@ -29,7 +29,7 @@ public class User {
 
     public User(String firstName, String lastName, String email, String password,
                 String role, String verificationCode,
-                LocalDateTime verificationCodeExpireAt) {
+                LocalDateTime verificationCodeExpireAt,boolean isEnable) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
@@ -37,6 +37,7 @@ public class User {
         this.role = role;
         this.verificationCode = verificationCode;
         this.verificationCodeExpireAt = verificationCodeExpireAt;
+        this.isEnable = isEnable;
     }
 
 
