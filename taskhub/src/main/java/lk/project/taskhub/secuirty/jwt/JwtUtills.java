@@ -1,4 +1,4 @@
-package lk.project.taskhub.secuirty;
+package lk.project.taskhub.secuirty.jwt;
 
 
 import io.jsonwebtoken.JwtException;
@@ -6,7 +6,7 @@ import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
 import jakarta.servlet.http.HttpServletRequest;
-import lk.project.taskhub.service.UserDetailsImpl;
+import lk.project.taskhub.service.impl.UserDetailsImpl;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
@@ -37,11 +37,13 @@ public class JwtUtills {
         return Jwts.parser().verifyWith((SecretKey) key()).build().parseSignedClaims(token).getPayload().getSubject();
     }
 
-
     private Key key(){
         return Keys.hmacShaKeyFor(Decoders.BASE64URL.decode(secretKey));
     }
 
+    public long getExpirationTime(){
+        return jwtExpiration;
+    }
 
     public boolean validateToken(String authToken){
         try {
@@ -55,7 +57,6 @@ public class JwtUtills {
         }
         return true;
     }
-
 
 
     public String generateToken(UserDetailsImpl userDetails){
