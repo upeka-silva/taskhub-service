@@ -2,7 +2,7 @@ package lk.project.taskhub.service.impl;
 
 import lk.project.taskhub.Exceptions.UserAlreadyExistsException;
 import lk.project.taskhub.Exceptions.UserNotFoundException;
-import lk.project.taskhub.dto.RegistrationRequestDto;
+import lk.project.taskhub.dto.request.RegistrationRequestDataDto;
 import lk.project.taskhub.model.User;
 import lk.project.taskhub.repository.UserRepository;
 import lk.project.taskhub.service.UserService;
@@ -35,7 +35,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User registerUser(RegistrationRequestDto registrationRequestDto) {
+    public User registerUser(RegistrationRequestDataDto registrationRequestDto) {
         Optional<User> sendUser = userRepository.findByEmail(registrationRequestDto.getEmail());
 
               if (sendUser.isPresent()){
