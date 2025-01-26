@@ -1,20 +1,23 @@
-package lk.project.taskhub.dto;
+package lk.project.taskhub.dto.request;
 
-public class RegistrationRequestDto {
+public class RegistrationRequestDataDto {
 
     private String firstName;
+
     private String  lastName;
+
     private String email;
+
     private String password;
+
     private String role;
 
 
-    public RegistrationRequestDto() {
+    public RegistrationRequestDataDto() {
     }
 
-
-    public RegistrationRequestDto(String firstName, String lastName,
-                                  String email, String password, String role) {
+    public RegistrationRequestDataDto(String firstName, String lastName,
+                                      String email, String password, String role) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
