@@ -88,6 +88,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
                 selectedUser.get().setEnable(true);
                 selectedUser.get().setVerificationCode(null);
                 selectedUser.get().setVerificationCodeExpireAt(null);
+                userRepository.save(selectedUser.get());
             }else{
                 throw new RuntimeException("Invalid verification code");
             }
