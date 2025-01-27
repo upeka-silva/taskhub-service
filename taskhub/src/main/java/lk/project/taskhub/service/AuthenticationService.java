@@ -19,8 +19,4 @@ public interface AuthenticationService {
     void reSendVerificationCode(String email);
 
 
-
-
-
-
 }
