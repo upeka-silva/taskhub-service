@@ -79,7 +79,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     }
 
     public void verifyUser(VerifyUserDto verifyUserDto){
-        Optional<User> selectedUser = userRepository.findByEmail(verifyUserDto.getEmail());
+        Optional<User> selectedUser = userRepository.findByVerificationCode(verifyUserDto.getVerificationCode());
         if(selectedUser.isPresent()){
             if(selectedUser.get().getVerificationCodeExpireAt().isBefore(LocalDateTime.now())){
                 throw new RuntimeException("Verification code has expired!!");
@@ -93,7 +93,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
                 throw new RuntimeException("Invalid verification code");
             }
         }else{
-            throw new UserNotFoundException("user not found!"+verifyUserDto.getEmail());
+            throw new UserNotFoundException("user not found!");
         }
     }
 

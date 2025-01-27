@@ -2,17 +2,14 @@ package lk.project.taskhub.dto.response;
 
 public class VerifyUserDto {
 
-    private String email;
 
     private String verificationCode;
 
-
-    public String getEmail() {
-        return email;
+    public VerifyUserDto() {
     }
 
-    public void setEmail(String email) {
-        this.email = email;
+    public VerifyUserDto(String verificationCode) {
+        this.verificationCode = verificationCode;
     }
 
     public String getVerificationCode() {
