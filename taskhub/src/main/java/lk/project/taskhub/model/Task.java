@@ -2,6 +2,7 @@ package lk.project.taskhub.model;
 
 
 import jakarta.persistence.*;
+import org.hibernate.annotations.CreationTimestamp;
 
 import java.time.LocalDateTime;
 
@@ -28,6 +29,10 @@ public class Task {
     @Column(nullable = false)
     private boolean isTodayTask =false;
 
+    @Column(name = "created_at", updatable = false)
+    @CreationTimestamp
+    private LocalDateTime createdAt;
+
 
     public Task() {
     }
@@ -39,6 +44,14 @@ public class Task {
         this.dueDate = dueDate;
         this.isCompleted = isCompleted;
         this.isTodayTask = isTodayTask;
+    }
+
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(LocalDateTime createdAt) {
+        this.createdAt = createdAt;
     }
 
     public Long getId() {

@@ -3,12 +3,10 @@ package lk.project.taskhub.service.impl;
 import lk.project.taskhub.Exceptions.TaskNotFoundException;
 import lk.project.taskhub.dto.request.TaskRequestDto;
 import lk.project.taskhub.model.Task;
-import lk.project.taskhub.model.User;
 import lk.project.taskhub.repository.TaskRepository;
 import lk.project.taskhub.repository.UserRepository;
 import lk.project.taskhub.service.TaskService;
 import org.springframework.stereotype.Service;
-
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -28,8 +26,8 @@ public class TaskServiceImpl implements TaskService {
     }
 
     @Override
-    public Task creatTask(TaskRequestDto dto) {
-        if(dto.getTaskName()!=null && dto.getDueDate() == null){
+    public Task createTask(TaskRequestDto dto) {
+        if(dto.getTaskName()!=null && dto.getDueDate() != null){
             Task task = new Task(
                     dto.getTaskName(),
                     dto.getDescription()
@@ -43,24 +41,34 @@ public class TaskServiceImpl implements TaskService {
         throw new RuntimeException("Invalid task details!");
     }
 
-    @Override
-    public Task updateTask(Long id) {
-        return taskRepository.findById(id).orElseThrow(()->new TaskNotFoundException("Task not found!"));
+    public Task updateTask(Long id, TaskRequestDto taskRequestDto) {
+        return taskRepository.findById(id).map(task -> {
+            task.setTaskName(taskRequestDto.getTaskName());
+            task.setDescription(taskRequestDto.getDescription());
+            task.setDueDate(taskRequestDto.getDueDate());
+            return taskRepository.save(task);
+        }).orElseThrow(() -> new TaskNotFoundException("Task not found with id: " + id));
     }
 
     @Override
-    public List<Task> getAllTasks(String userName) {
-        return List.of();
+    public List<Task> getAllTasks() {
+        return taskRepository.findAll();
+    }
+
+
+    @Override
+    public List<Task> findByDate(LocalDate filterDate) {
+        return taskRepository.findByCreatedAtDate(filterDate);
     }
 
     @Override
-    public void creatTask(Long id) {
+    public void deleteTaskById(Long id) {
         Optional<Task> selectedTask = taskRepository.findById(id);
-        if(selectedTask.isPresent()){
+        if (selectedTask.isPresent()) {
             taskRepository.delete(selectedTask.get());
+        } else {
+            throw new TaskNotFoundException("Task not found!");
         }
-      throw new TaskNotFoundException("Cannot find the task!");
-
     }
 
 
