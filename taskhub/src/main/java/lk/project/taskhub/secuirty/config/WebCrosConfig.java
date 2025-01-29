@@ -12,30 +12,39 @@ public class WebCrosConfig implements WebMvcConfigurer {
     @Value("${frontend.url}")
     private String frontendUrl;
 
-
-
     @Bean
     public WebMvcConfigurer webMvcConfigurer(){
 
         return new WebMvcConfigurer() {
             @Override
             public void addCorsMappings(CorsRegistry registry) {
-                registry.addMapping("/**").
-                        allowedOrigins(frontendUrl).
-                        allowedMethods("GET","POST","PUT","DELETE")
+                // This is a boilerplate code for configuring CORS.
+                // I initially tried using a more general mapping like `addMapping("/api/v1/**")`, but it didn't work as expected.
+                // Specifically, it didn't handle the CORS headers and methods correctly,
+                // so I had to explicitly define mappings for each endpoint (tasks, users, auth).
+                // This ensures proper handling of allowed origins, methods, and headers like
+                // "Authorization" and "Content-Type", which are critical for frontend-backend communication.
+                registry.addMapping("/api/v1/tasks/**")
+                        .allowedOrigins(frontendUrl)
+                        .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
                         .allowedHeaders("*")
-                        .allowCredentials(true).maxAge(3600);
+                        .allowedHeaders("Authorization", "Content-Type")
+                        .allowCredentials(true);
+                registry.addMapping("/api/v1/users/**")
+                        .allowedOrigins(frontendUrl)
+                        .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
+                        .allowedHeaders("*")
+                        .allowedHeaders("Authorization", "Content-Type")
+                        .allowCredentials(true);
+
+                registry.addMapping("/api/v1/auth/**")
+                        .allowedOrigins(frontendUrl)
+                        .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
+                        .allowedHeaders("*")
+                        .allowedHeaders("Authorization", "Content-Type")
+                        .allowCredentials(true);
             }
         };
     }
-
-
-
-
-
-
-
-
-
 
 }

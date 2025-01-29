@@ -79,7 +79,8 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     }
 
     public void verifyUser(VerifyUserDto verifyUserDto){
-        Optional<User> selectedUser = userRepository.findByVerificationCode(verifyUserDto.getVerificationCode());
+        System.out.println(verifyUserDto.getVerificationCode());
+        Optional<User> selectedUser = userRepository.findByEmail(verifyUserDto.getEmail());
         if(selectedUser.isPresent()){
             if(selectedUser.get().getVerificationCodeExpireAt().isBefore(LocalDateTime.now())){
                 throw new RuntimeException("Verification code has expired!!");
